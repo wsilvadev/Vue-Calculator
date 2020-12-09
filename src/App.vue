@@ -4,7 +4,7 @@
         <div id="container">
             <Register @register="registerUser" />
             <div id="userContainer">
-                <div v-for="user in users" v-bind:key="user.id">
+                <div v-for="user in orderUser" v-bind:key="user.id">
                     <Users
                         :id="user.id"
                         :email="user.email"
@@ -21,6 +21,7 @@
 <script>
 import Users from './components/Users.vue';
 import Register from './components/Register.vue';
+import _ from 'lodash';
 
 export default {
     watch: {},
@@ -53,6 +54,11 @@ export default {
                 item => item.id !== $event.id
             );
             return (this.users = usersFilter);
+        }
+    },
+    computed: {
+        orderUser: function() {
+            return _.orderBy(this.users, ['name'], ['asc']);
         }
     }
 };
